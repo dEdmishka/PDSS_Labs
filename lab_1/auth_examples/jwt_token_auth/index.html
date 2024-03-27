@@ -156,7 +156,7 @@
     logoutLink.addEventListener("click", (e) => {
         e.preventDefault();
         localStorage.setItem('jwt', '');
-        // location.reload();
+        location.reload();
     });
 
     loginButton.addEventListener("click", (e) => {
@@ -178,7 +178,7 @@
 
             if(token) localStorage.setItem('jwt', token);
 
-            // location.reload();
+            location.reload();
         }).catch((response) => {
             loginErrorMsg.style.opacity = 1;
         });

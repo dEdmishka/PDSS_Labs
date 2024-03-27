@@ -1,18 +1,19 @@
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const { log } = require('console');
 const port = 3000;
+
+const TOKEN_SECRET = "please work"
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-dotenv.config();
 
 function generateAccessToken(username, login) {
-    console.log(jwt.sign({ username, login }, process.env.TOKEN_SECRET, { expiresIn: '1800s' }))
-    return jwt.sign({ username, login }, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
+    console.log(jwt.sign({ username, login }, TOKEN_SECRET, { expiresIn: '1800s' }))
+    return jwt.sign({ username, login }, TOKEN_SECRET, { expiresIn: '1800s' });
 };
 
 const users = [
@@ -35,7 +36,7 @@ app.get('/', (req, res) => {
     const token = req.headers['authorization'];
     // need to iterate through jwt-tokens file and find appropriate one, after check one as token.
     if (token) {
-        jwt.verify(token, process.env.TOKEN_SECRET, (err, decoded) => {
+        jwt.verify(token, TOKEN_SECRET, (err, decoded) => {
             if (err) {
                 return res.status(401).json({ message: 'Неправильний JWT токен' });
             }
